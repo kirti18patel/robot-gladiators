@@ -27,6 +27,7 @@ var shop = function(){
             break;
     }
 };
+
 var fight = function(enemy) {
     while( enemy.health >0 && playerInfo.health>0) {
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
@@ -70,8 +71,17 @@ var fight = function(enemy) {
     }
 };
 
+var getPlayerName = function(){
+    var name = "";
+    while(name==="" || name===null){
+        name= prompt("What is your robot's name?");
+    }
+    console.log(name);
+    return name;
+};
+
 var playerInfo ={ 
-    name : window.prompt("What is your robot's name?"),
+    name : getPlayerName(),
     health : 100,
     attack : 10,
     money : 10,
