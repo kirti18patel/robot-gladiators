@@ -4,21 +4,16 @@ var randomNumber = function(min, max){
 };
 
 var shop = function(){
-    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
+    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 1 for 'REFILL', 2 for 'UPGRADE', or 3 for 'LEAVE' to make a choice.");
+    shopOptionPrompt = parseInt(shopOptionPrompt);
     switch (shopOptionPrompt){
-        case "refill":
-        case "REFILL":
-        case "Refill":
+        case 1:
             playerInfo.refillHealth();
             break;
-        case "upgrade":
-        case "Upgrade":
-        case "UPGRADE":
+        case 2:
             playerInfo.upgradeAttack();
             break;
-        case "leave":
-        case "Leave":
-        case "LEAVE":
+        case 3:
             window.alert("leaving the store");
             break;
         default:
@@ -28,18 +23,29 @@ var shop = function(){
     }
 };
 
-var fight = function(enemy) {
-    while( enemy.health >0 && playerInfo.health>0) {
+var fightOrSkip = function(){
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-
-    if(promptFight==="skip" || promptFight==="Skip" || promptFight==="SKIP"){
+    console.log(promptFight);
+    if (!promptFight){
+        window.alert("You need to provide a valid answer! Please try again.");
+        fightOrSkip();
+    }
+    if(promptFight.toLowerCase()==="skip"){
         var confirmSkip= window.confirm("Are you sure you want to quit?");
         if (confirmSkip){
             window.alert(playerInfo.name + " has decided to quit a fight. Goodbye!")
             playerInfo.money = Math.max(0, playerInfo.money -10);
             console.log("Player Money ", playerInfo.money );
-            break;
+            return true;
         }
+    }
+    return false;
+};
+
+var fight = function(enemy) {
+    while( enemy.health >0 && playerInfo.health>0) {
+    if(fightOrSkip()){
+        break;
     }
 
     var damage = randomNumber(playerInfo.attack-3, playerInfo.attack);
