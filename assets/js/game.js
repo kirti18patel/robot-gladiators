@@ -11,7 +11,7 @@ var enemyHealth = 50;
 var enemyAttack = 12;
 
 var randomNumber = function(min, max){
-    var value = Math.floor(Math.random()*(max-min +1)+40);
+    var value = Math.floor(Math.random()*(max-min +1)+min);
     return value;
 };
 
@@ -67,7 +67,8 @@ var fight = function(enemyName) {
         }
     }
 
-    enemyHealth=Math.max(0, enemyHealth-playerAttack);
+    var damage = randomNumber(playerAttack-3, playerAttack);
+    enemyHealth=Math.max(0, enemyHealth-damage);
     console.log(playerName+ " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining.")
 
     // check enemy's health
@@ -80,7 +81,8 @@ var fight = function(enemyName) {
             window.alert(enemyName + " still has " + enemyHealth + " health left.");
         }
 
-        playerHealth=Math.max(0, playerHealth-enemyAttack);
+        var damage = randomNumber(enemyAttack-3, enemyAttack);
+        playerHealth=Math.max(0, playerHealth-damage);
         console.log(enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
         
         // check player's health
@@ -103,7 +105,7 @@ var startGame = function(){
     for (var i=0; i<enemyNames.length; i++){
         if (playerHealth>0) {
                 window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
-                enemyHealth=randomNumber();
+                enemyHealth=randomNumber(40,60);
                 fight(enemyNames[i]);
                 if (playerHealth>0 && i<enemyNames.length-1){
                     var storeConfirm = window.confirm('The fight is over, visit the store before the next round ?')
