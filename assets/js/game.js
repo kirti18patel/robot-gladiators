@@ -28,18 +28,29 @@ var shop = function(){
     }
 };
 
-var fight = function(enemy) {
-    while( enemy.health >0 && playerInfo.health>0) {
+var fightOrSkip = function(){
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-
-    if(promptFight==="skip" || promptFight==="Skip" || promptFight==="SKIP"){
+    console.log(promptFight);
+    if (!promptFight){
+        window.alert("You need to provide a valid answer! Please try again.");
+        fightOrSkip();
+    }
+    if(promptFight.toLowerCase()==="skip"){
         var confirmSkip= window.confirm("Are you sure you want to quit?");
         if (confirmSkip){
             window.alert(playerInfo.name + " has decided to quit a fight. Goodbye!")
             playerInfo.money = Math.max(0, playerInfo.money -10);
             console.log("Player Money ", playerInfo.money );
-            break;
+            return true;
         }
+    }
+    return false;
+};
+
+var fight = function(enemy) {
+    while( enemy.health >0 && playerInfo.health>0) {
+    if(fightOrSkip()){
+        break;
     }
 
     var damage = randomNumber(playerInfo.attack-3, playerInfo.attack);
