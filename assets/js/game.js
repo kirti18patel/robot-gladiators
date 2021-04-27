@@ -4,21 +4,16 @@ var randomNumber = function(min, max){
 };
 
 var shop = function(){
-    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
+    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 1 for 'REFILL', 2 for 'UPGRADE', or 3 for 'LEAVE' to make a choice.");
+    shopOptionPrompt = parseInt(shopOptionPrompt);
     switch (shopOptionPrompt){
-        case "refill":
-        case "REFILL":
-        case "Refill":
+        case 1:
             playerInfo.refillHealth();
             break;
-        case "upgrade":
-        case "Upgrade":
-        case "UPGRADE":
+        case 2:
             playerInfo.upgradeAttack();
             break;
-        case "leave":
-        case "Leave":
-        case "LEAVE":
+        case 3:
             window.alert("leaving the store");
             break;
         default:
